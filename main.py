@@ -38,63 +38,63 @@
 
 
 
-# Jonathan Modesto & Christian Garcia 
-        
+
+#Jonathan Modesto & Christian Garcia 
 
 import random
 
-
-#  DATA STORAGE 
+# DATA STORAGE 
 # A list of tuples, where each tuple is (Title, Setup, Punchline)
-
 joke_list = [
     ("Robbers", "Calder", "Calder police - I've been robbed!"),
     ("Tanks", "Tank", "You are welcome!"),
     ("Pencils", "Broken pencil", "Nevermind, it's pointless!")
 ]
 
-# FUNCTION DEFINITION 
+# MAIN GAME LOOP WRAPPED IN A FUNCTION
+def run_game(jokes_to_use):
+    playing = True
+    # Flag to keep the game running
+    while playing:
+        # Ask user to play
+        choice = input("\nDo you want to hear a joke? (yes/no): ").lower()
+        if choice == "yes":
+            # Select and play a random joke
+            selected_joke = random.choice(jokes_to_use)
+            print(f"\n--- {selected_joke[0]} Joke ---")
+            input("Knock Knock. (Press Enter)")
+            input("Who's there? (Press Enter)")
+            input(f"{selected_joke[1]}! (Press Enter)")
+            input(f"{selected_joke[1]} who? (Press Enter)")
+            print(f"{selected_joke[2]}")
+            print("-------------------------")
+                          # -----
 
-def tell_joke(joke_tuple):
-#   Prints a structured knock-knock joke with pauses
-    print(f"\n--- {joke_tuple[0]} Joke ---")
-    input("Knock Knock. (Press Enter) ")
-    input("Who's there? (Press Enter) ")
-    input(f"{joke_tuple[1]}! (Press Enter) ")
-    input(f"{joke_tuple[1]} who? (Press Enter) ")
-    print(f"{joke_tuple[2]}")
-    print("-------------------------")
+            # Ask if they want another
+            more = input("Want another joke? (yes/no): ").lower()
+            if more != "yes":
+                playing = False
+                print("Okay, suit yourself!")
+        else:
+            playing = False
+            print("Okay, maybe next time!")
 
-    # MAIN GAME LOOP
-print("Welcome to the Interactive Joke Teller!")
-
-playing = True    # Flag to keep the game running
-while playing: 
-        # Ask user to play, convert to lowercase to handle 'Yes' or 'yes'
-    choice = input("\nDo you want to hear a joke? (yes/no): ").lower()
-
-    if choice == "yes":            # Select and play a random joke
-        selected_joke = random.choice(joke_list)
-        tell_joke(selected_joke)
-        
-        # Ask if they want another
-        more = input("Want another joke? (yes/no): ").lower()
-        if more != "yes":
-            playing = True   # Continue loop
-    else:
-        print("Okay, suit yourself!")
-        playing = False    # Exit loop
-
-#   CLOSING & RATING 
-
-print("\nThanks for playing!")
-rate = input("Please rate our game 1-10: ")
-rate = int(rate)     # Convert input string to integer
+    # CLOSING & RATING
+    print("\nThanks for playing!")
+    rate = input("Please rate our game 1-10: ")
+    # input validation
+    if rate.isdigit():
+        rate = int(rate)
         # Conditional for rating
-if rate <= 4 :
-    print(f" You rated us {rate}/10, Appericate the critism...")
-elif rate <= 6 :
-    print(f" You rated us {rate}/10, we'll do better next time.")
-else:
-    print(f"Thanks! You rated us {rate}/10.")
+        if rate <= 4:
+            print(f"You rated us {rate}/10, Appreciate the criticism...")
+        elif rate <= 6:
+            print(f"You rated us {rate}/10, we'll do better next time.")
+        else:
+            print(f"Thanks! You rated us {rate}/10.")
+    else:
+        print("Invalid rating input.")
+
+
+run_game(joke_list)
 
